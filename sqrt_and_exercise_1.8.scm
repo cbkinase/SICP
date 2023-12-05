@@ -2,6 +2,10 @@
 
 (define (square x) (* x x))
 
+(define (pow x y)
+    (cond ((= y 1) x)
+    (else (* x (pow x (- y 1))))))
+
 (define (abs x)
     (cond
         ((< x 0) (- x))
@@ -34,7 +38,7 @@
   (/ (+ (/ x (square guess)) (* guess 2)) 3))
 
 (define (cube-root-good-enough? guess x)
-    (< (abs (- (* guess guess guess) x)) TOLERANCE))
+    (< (abs (- (pow guess 3) x)) TOLERANCE))
 
 (define (cube-root x)
     (average-iter cube-root-good-enough? cube-root-improve 1.0 x))
