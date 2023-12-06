@@ -6,6 +6,17 @@
     (cond ((= y 1) x)
     (else (* x (pow x (- y 1))))))
 
+;;; pow is ok, but it might be useful to be able to "fix" the exponent
+
+(define (fix-power y)
+    (lambda (x) (pow x y)))
+
+(define (cube x)
+    ((fix-power 3) x))
+
+(display (cube 1110))
+(newline)
+
 (define (abs x)
     (cond
         ((< x 0) (- x))
@@ -38,7 +49,7 @@
   (/ (+ (/ x (square guess)) (* guess 2)) 3))
 
 (define (cube-root-good-enough? guess x)
-    (< (abs (- (pow guess 3) x)) TOLERANCE))
+    (< (abs (- (cube guess) x)) TOLERANCE))
 
 (define (cube-root x)
     (average-iter cube-root-good-enough? cube-root-improve 1.0 x))
